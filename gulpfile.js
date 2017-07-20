@@ -9,9 +9,9 @@ var notifier = require('node-notifier')
 
 
 var srcFiles = {
-    css: ['./node_modules/materialize-css/dist/css/materialize.css'],
-    less: ['app/web/less/*.less'],
-    js: ['./node_modules/angular/angular.js', './app/web/js/**/*.js']
+    css: [],
+    less: ['node_modules/font-awesome/less/font-awesome.less', 'app/web/less/style.less'],
+    js: ['./node_modules/angular/angular.js','./app/web/js/app.js', './app/web/js/**/*.js']
 
 }
 
@@ -21,11 +21,16 @@ gulp.task('clean', function(cb) {
     });
 });
 
+gulp.task('fonts',['clean'], function() {
+    return gulp.src('node_modules/font-awesome/fonts/*')
+        .pipe(gulp.dest('./build/fonts'))
+})
+
 gulp.task('css', ['clean'], function() {
     var cssStream = gulp.src(srcFiles.css)
         .pipe(concat('style.css'));
 
-    var lessStream = gulp.src('./app/web/less/style.less')
+    var lessStream = gulp.src(srcFiles.less)
         .pipe(less());
 
     var mergedStream = merge(cssStream, lessStream)
@@ -49,7 +54,7 @@ gulp.task('html', ['clean'], function() {
         .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('build', ['css','js', 'html'], function() {
+gulp.task('build', ['fonts','css','js', 'html'], function() {
     notifier.notify({
         title: 'Build done',
         message: 'The build is done!',

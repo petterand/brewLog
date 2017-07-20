@@ -4,7 +4,26 @@
         <link href="css/style.css" rel="stylesheet" />
         <script src="js/script.js"></script>
     </head>
-    <body>
-        HEJ VÄRLDEN
+    <body ng-app="app">
+        <div id="main-wrapper">
+            <div id="header" ng-controller="HeaderController">
+                <div id="add-brew-wrapper">
+                    <label for="brew-name">Namn:</label><input type="text" id="brew-name" ng-model="brew.name"/>
+                    <label for="brew-start">Start:</label><input type="date" id="brew-start" ng-model="brew.start"/>
+                    <!-- <label for="brew-end">Slut:</label><input type="date" id="brew-end" ng-model="brew.end"/> -->
+                    <button class="blue" ng-click="saveBrew(brew)">Spara</button>
+                </div>
+            </div>
+            <div ng-controller="BrewsController" id="brew-wrapper">
+                <div id="brew-list">
+                    <div ng-repeat="brew in brews" ng-click="selectBrew(brew)" class="brew-item" ng-class="{'active': brew === selectedBrew}">
+                        <span>{{brew.name}}</span>
+                    </div>
+                </div>
+                <div id="brew-content">
+                    <h2 ng-bind="selectedBrew.name"></h2>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

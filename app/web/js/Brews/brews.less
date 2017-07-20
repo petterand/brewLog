@@ -1,0 +1,36 @@
+#brew-wrapper {
+    display: flex;
+    flex: 0 1 100%;
+}
+
+#brew-list {
+    flex: 0 0 200px;
+    background-color: #545454;
+    overflow: hidden;
+    .brew-item {
+        color: #fff;
+        cursor: pointer;
+        padding: 12px 10px;
+        &.active {
+            position: relative;
+            &::after {
+                content: "";
+                background-color: #fff;
+                height: 29px;
+                width: 29px;
+                position: absolute;
+                right: -15px;
+                bottom: 5px;
+                transform: rotate(45deg);
+            }
+        }
+    }
+}
+
+#brew-content {
+    flex: 0 1 100%;
+    padding: 7px 24px;
+    h2 {
+        margin-top: 0;
+    }
+}
