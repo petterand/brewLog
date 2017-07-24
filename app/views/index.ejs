@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <meta charset="utf-8" /> 
+        <title>BrewLog</title>
+        <link href="css/style.css" rel="stylesheet" />
+        <script src="js/script.js"></script>
+    </head>
+    <body ng-app="app">
+        <div id="main-wrapper">
+            <div ng-controller="BrewsController" id="brew-wrapper">
+                <div id="brew-list">
+                    <div ng-repeat="brew in brews" ng-click="selectBrew(brew)" class="brew-item" ng-class="{'active': brew.name === selectedBrew.name}">
+                        <span ng-bind="brew.name"></span>
+                    </div>
+                    <% if (isLoggedIn) { %>
+                        <div class="brew-item new-item" ng-class="{'saving': saving}">
+                            <input placeholder="Lägg till" type="text" ng-model="newBrew" ng-keyup="$event.keyCode !== 13 || saveBrew()">
+                        </div>
+                    <% } %>
+                    <%- include('partials/login', {'isLoggedIn': isLoggedIn} ); %>
+
+                </div>
+                <div id="brew-content">
+                    <div id="brew-content-top">
+                        <h2 ng-bind="selectedBrew.name"></h2>
+                        <% if (isLoggedIn) { %>
+                            <div id="top-buttons" ng-class="{'loaded': selectedBrew}">
+                                <button class="green" ng-click="startBrew()" ng-if="!selectedBrew.active && !selectedBrew.ended">Starta</button>
+                                <button class="red" ng-click="stopBrew()" ng-if="selectedBrew.active">Stoppa</button>
+                            </div>
+                        <% } %>
+                    </div>
+                    <div id="brew_info">
+                        <p ng-if="selectedBrew.started_at"><span>Startades: </span><span ng-bind="selectedBrew.started_at | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
+                        <p ng-if="selectedBrew.ended_at"><span>Avslutades: </span><span ng-bind="selectedBrew.ended_at | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
+                        <div>
+                            <p ng-repeat="temp in selectedBrew.temps">
+                                <span ng-bind="temp.measured_at | date:'yyyy-MM-dd HH:mm:ss'"></span> -
+                                <span ng-bind="temp.temperature"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

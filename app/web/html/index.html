@@ -1,5 +1,6 @@
-<html>
+<!-- <html>
     <head>
+        <meta charset="utf-8" /> 
         <title>BrewLog</title>
         <link href="css/style.css" rel="stylesheet" />
         <script src="js/script.js"></script>
@@ -7,17 +8,15 @@
     <body ng-app="app">
         <div id="main-wrapper">
             <div id="header" ng-controller="HeaderController">
-                <div id="add-brew-wrapper">
-                    <label for="brew-name">Namn:</label><input type="text" id="brew-name" ng-model="brew.name"/>
-                    <label for="brew-start">Start:</label><input type="date" id="brew-start" ng-model="brew.start"/>
-                    <!-- <label for="brew-end">Slut:</label><input type="date" id="brew-end" ng-model="brew.end"/> -->
-                    <button class="blue" ng-click="saveBrew(brew)">Spara</button>
-                </div>
+               
             </div>
             <div ng-controller="BrewsController" id="brew-wrapper">
                 <div id="brew-list">
                     <div ng-repeat="brew in brews" ng-click="selectBrew(brew)" class="brew-item" ng-class="{'active': brew === selectedBrew}">
                         <span>{{brew.name}}</span>
+                    </div>
+                    <div class="brew-item new-item" ng-class="{'saving': saving}">
+                        <input placeholder="Lägg till" type="text" ng-model="newBrew" ng-keyup="$event.keyCode !== 13 || saveBrew()">
                     </div>
                 </div>
                 <div id="brew-content">
@@ -26,4 +25,4 @@
             </div>
         </div>
     </body>
-</html>
+</html> -->

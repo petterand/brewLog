@@ -54,7 +54,7 @@ gulp.task('html', ['clean'], function() {
         .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('build', ['fonts','css','js', 'html'], function() {
+gulp.task('build', ['fonts','css','js'], function() {
     notifier.notify({
         title: 'Build done',
         message: 'The build is done!',

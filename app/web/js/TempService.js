@@ -10,7 +10,7 @@ function TempService($http, $q) {
 
     function getTemps() {
         var deferred = $q.defer();
-        $http.get('http://localhost/brewlog/api/temp').then(function(response) {
+        $http.get('/temp').then(function(response) {
             deferred.resolve(response.data.data);
         }, function() {
             deferred.reject();
@@ -23,9 +23,9 @@ function TempService($http, $q) {
     function getTempsByDate(fromDate, toDate) {
         console.assert(fromDate);
         var deferred = $q.defer();
-        var url = 'http://localhost/brewlog/api/temp?fromDate=' + fromDate;
+        var url = '/temp?dateFrom=' + fromDate;
         if(toDate) {
-            url += '&toDate=' + toDate;
+            url += '&dateTo=' + toDate;
         }
         $http.get(url).then(function(response) {
             deferred.resolve(response.data.data);

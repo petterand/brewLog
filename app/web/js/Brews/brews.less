@@ -7,6 +7,9 @@
     flex: 0 0 200px;
     background-color: #545454;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-top: 12px;
     .brew-item {
         color: #fff;
         cursor: pointer;
@@ -29,8 +32,37 @@
 
 #brew-content {
     flex: 0 1 100%;
-    padding: 7px 24px;
-    h2 {
-        margin-top: 0;
+    padding: 20px;
+    #brew-content-top {
+        display: flex;
+        h2 {
+            margin: 0;
+        }
+        #top-buttons {
+            margin: auto 0;
+            margin-left: auto;
+            display: none;
+            &.loaded {
+                display: block;
+            }
+        }
+    }
+}
+
+#login-form {
+    padding: 12px;
+    margin-top: auto;
+    input[name=username] {
+        margin-bottom: 8px;
+    }
+    input[type=submit] {
+        display: none;
+    }
+    a {
+        color: #fff;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
