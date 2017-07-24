@@ -34,10 +34,13 @@
                         <p ng-if="selectedBrew.started_at"><span>Startades: </span><span ng-bind="selectedBrew.started_at | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
                         <p ng-if="selectedBrew.ended_at"><span>Avslutades: </span><span ng-bind="selectedBrew.ended_at | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
                         <div>
-                            <p ng-repeat="temp in selectedBrew.temps">
+                            <!-- <p ng-repeat="temp in selectedBrew.temps">
                                 <span ng-bind="temp.measured_at | date:'yyyy-MM-dd HH:mm:ss'"></span> -
                                 <span ng-bind="temp.temperature"></span>
-                            </p>
+                            </p> -->
+                            <div id="graph-wrapper">
+                                <canvas id="temps" class="chart chart-line" chart-hover="onHover" chart-colors="chartColors" chart-data="chartData" chart-labels="chartLabels" chart-options="chartOptions"></canvas>
+                            </div>
                         </div>
                     </div>
 

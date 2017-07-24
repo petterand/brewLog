@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "angular": "^1.6.4",
+    "angular-chart.js": "^1.1.1",
     "del": "^2.2.2",
     "eslint-plugin-angular": "^2.3.0",
     "font-awesome": "^4.7.0",

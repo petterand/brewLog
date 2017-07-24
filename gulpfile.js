@@ -11,7 +11,13 @@ var notifier = require('node-notifier')
 var srcFiles = {
     css: [],
     less: ['node_modules/font-awesome/less/font-awesome.less', 'app/web/less/style.less'],
-    js: ['./node_modules/angular/angular.js','./app/web/js/app.js', './app/web/js/**/*.js']
+    js: [
+        './node_modules/angular/angular.js',
+        './node_modules/angular-chart.js/node_modules/chart.js/dist/Chart.min.js',
+        './node_modules/angular-chart.js/dist/angular-chart.min.js',
+        './app/web/js/app.js',
+        './app/web/js/**/*.js'
+    ]
 
 }
 

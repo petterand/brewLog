@@ -20,7 +20,6 @@ function BrewService($http, $q) {
                 item.active = isBrewActive(item);
                 item.ended = isBrewEnded(item);
             });
-            console.log(data);
             deferred.resolve(data);
         });
 

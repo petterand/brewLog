@@ -1,8 +1,8 @@
 angular.module('app').controller('BrewsController', BrewsController);
 
-BrewsController.$inject = ['$scope', 'BrewService', 'TempService'];
+BrewsController.$inject = ['$scope', 'BrewService', 'TempService', '$filter'];
 
-function BrewsController($scope, BrewService, TempService) {
+function BrewsController($scope, BrewService, TempService, $filter) {
 
     $scope.newBrew = '';
     $scope.saving = false;
@@ -26,6 +26,7 @@ function BrewsController($scope, BrewService, TempService) {
             }
             TempService.getTempsByDate(fromDate, toDate).then(function(temps) {
                 $scope.selectedBrew.temps = temps;
+                prepareChartData(temps);
             });
         }
     }
@@ -65,5 +66,44 @@ function BrewsController($scope, BrewService, TempService) {
         });
     }
 
+    function prepareChartData(temps) {
+        var chartData = temps.map(function(item) {
+            return parseFloat(item.temperature);
+        });
+        var chartLabels = temps.map(function(item) {
+            return $filter('date')(item.measured_at, 'yyyy-MM-dd HH:mm');
+        });
+
+
+        $scope.chartData = [chartData];
+        $scope.chartLabels = chartLabels;
+        $scope.chartColors = ['#ff0000'];
+        $scope.chartOptions = {
+            tooltips: {
+                mode: 'single',
+                callbacks: {
+                    title: function(a) {
+                        return a[0].yLabel;
+                    },
+                    label: function() {
+                        return '';
+                    }
+                }
+            },
+            elements: {
+                line: {
+                    fill: false,
+                    borderColor: '#FF0000'
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+    }
 
 }
