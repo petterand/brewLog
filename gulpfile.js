@@ -13,7 +13,7 @@ var srcFiles = {
     less: ['node_modules/font-awesome/less/font-awesome.less', 'app/web/less/style.less'],
     js: [
         './node_modules/angular/angular.js',
-        './node_modules/angular-chart.js/node_modules/chart.js/dist/Chart.min.js',
+        './node_modules/chart.js/dist/Chart.min.js',
         './node_modules/angular-chart.js/dist/angular-chart.min.js',
         './app/web/js/app.js',
         './app/web/js/**/*.js'

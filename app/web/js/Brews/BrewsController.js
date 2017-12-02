@@ -7,10 +7,17 @@ function BrewsController($scope, BrewService, TempService, $filter) {
     $scope.newBrew = '';
     $scope.saving = false;
 
-    BrewService.getBrews().then(function(brews) {
+    function sortBrewsByStartDate(a, b) {
+        return new Date(b.started_at) - new Date(a.started_at);
+    }
+
+    BrewService.getBrews().then(function (brews) {
+        brews.sort(sortBrewsByStartDate);
         $scope.brews = brews;
         $scope.selectBrew(brews[0]); //should be the active brew
     });
+
+
 
     $scope.selectBrew = function selectBrew(brew) {
         $scope.selectedBrew = brew;
@@ -18,13 +25,13 @@ function BrewsController($scope, BrewService, TempService, $filter) {
     };
 
     function getTempsForBrew(brew) {
-        if(Boolean(brew.started_at)) {
+        if (Boolean(brew.started_at)) {
             var fromDate = new Date(brew.started_at).getTime();
             var toDate = null;
-            if(brew.ended_at) {
+            if (brew.ended_at) {
                 toDate = new Date(brew.ended_at).getTime();
             }
-            TempService.getTempsByDate(fromDate, toDate).then(function(temps) {
+            TempService.getTempsByDate(fromDate, toDate).then(function (temps) {
                 $scope.selectedBrew.temps = temps;
                 prepareChartData(temps);
             });
@@ -40,7 +47,7 @@ function BrewsController($scope, BrewService, TempService, $filter) {
             name: $scope.newBrew
         };
         $scope.saving = true;
-        BrewService.saveBrew(brewToSave).then(function() {
+        BrewService.saveBrew(brewToSave).then(function () {
             $scope.brews.push(brewToSave)
             $scope.newBrew = '';
             $scope.saving = false;
@@ -49,7 +56,7 @@ function BrewsController($scope, BrewService, TempService, $filter) {
 
     $scope.startBrew = function startBrew() {
         $scope.selectedBrew.started_at = new Date();
-        BrewService.updateBrew($scope.selectedBrew).then(function(response) {
+        BrewService.updateBrew($scope.selectedBrew).then(function (response) {
             var b = response.data;
             $scope.selectedBrew = b;
             $scope.selectedBrew.active = BrewService.isBrewActive($scope.selectedBrew);
@@ -58,7 +65,7 @@ function BrewsController($scope, BrewService, TempService, $filter) {
 
     $scope.stopBrew = function startBrew() {
         $scope.selectedBrew.ended_at = new Date();
-        BrewService.updateBrew($scope.selectedBrew).then(function(response) {
+        BrewService.updateBrew($scope.selectedBrew).then(function (response) {
             var b = response.data;
             $scope.selectedBrew = b;
             $scope.selectedBrew.active = BrewService.isBrewActive($scope.selectedBrew);
@@ -67,10 +74,10 @@ function BrewsController($scope, BrewService, TempService, $filter) {
     }
 
     function prepareChartData(temps) {
-        var chartData = temps.map(function(item) {
+        var chartData = temps.map(function (item) {
             return parseFloat(item.temperature);
         });
-        var chartLabels = temps.map(function(item) {
+        var chartLabels = temps.map(function (item) {
             return $filter('date')(item.measured_at, 'yyyy-MM-dd HH:mm');
         });
 
@@ -82,10 +89,10 @@ function BrewsController($scope, BrewService, TempService, $filter) {
             tooltips: {
                 mode: 'single',
                 callbacks: {
-                    title: function(a) {
+                    title: function (a) {
                         return a[0].yLabel;
                     },
-                    label: function() {
+                    label: function () {
                         return '';
                     }
                 }
@@ -94,6 +101,9 @@ function BrewsController($scope, BrewService, TempService, $filter) {
                 line: {
                     fill: false,
                     borderColor: '#FF0000'
+                },
+                point: {
+                    radius: 0
                 }
             },
             scales: {

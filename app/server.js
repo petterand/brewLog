@@ -23,8 +23,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.Promise = global.Promise;
-mongoose.connect(config.dbLogin, function(err) {
-    if(err) { console.log("ERR", err); return;}
+var dbpromise = mongoose.connect(config.dbLogin, {
+    useMongoClient: true
+});
+
+dbpromise.then(function() {
+    console.log('DB connected');
+},
+function(err) {
+    console.log('ERROR', err);
 });
 
 require('./passport')(passport);
@@ -75,16 +82,16 @@ app.get('/temp', function(req, res) {
         var dateFrom = new Date(parseInt(req.query.dateFrom));
         if(req.query.dateTo) {
             var dateTo = new Date(parseInt(req.query.dateTo));
-            Temp.find({}).where('measured_at').gt(dateFrom).lt(dateTo).exec(function(err, temps) {
+            Temp.find({}).where('measured_at').gt(dateFrom).lt(dateTo).sort('measured_at').exec(function(err, temps) {
                 handleGetTemps(err, temps, res);
             });
         } else {
-            Temp.find({}).where('measured_at').gt(dateFrom).exec(function(err, temps) {
+            Temp.find({}).where('measured_at').gt(dateFrom).sort('measured_at').exec(function(err, temps) {
                 handleGetTemps(err, temps, res);
             });
         }
     } else {
-        Temp.find({}, function(err, temps) {
+        Temp.find({},null, {sort: 'measured_at'}, function(err, temps) {
             handleGetTemps(err, temps, res);
         });
     }
@@ -147,8 +154,8 @@ function isLoggedIn(req, res, next) {
     res.status(401).send();
 }
 
-app.listen(3000, function() {
-    console.log('started at port 3000');
+app.listen(config.port, function() {
+    console.log('started at port', config.port);
 });
 
 function isBrewActive(brew) {
