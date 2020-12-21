@@ -27,6 +27,6 @@
     "materialize-css": "^1.0.0",
     "merge-stream": "^1.0.1",
     "mongoose": "^5.8.11",
-    "node-notifier": "^5.1.2"
+    "node-notifier": "^8.0.1"
   }
 }
