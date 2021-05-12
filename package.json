@@ -14,7 +14,7 @@
   "devDependencies": {
     "angular": "^1.7.9",
     "angular-chart.js": "^1.1.1",
-    "chart.js": "^2.6.0",
+    "chart.js": "^2.9.4",
     "del": "^2.2.2",
     "eslint-plugin-angular": "^2.3.0",
     "font-awesome": "^4.7.0",
